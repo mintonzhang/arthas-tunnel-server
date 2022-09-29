@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+  arthas-tunnel-server:
+    image: registry.cn-hangzhou.aliyuncs.com/ywja/arthas-tunnel-server:v1
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      USERNAME: test
+      USER_PASSWORD: test
+      WS_PORT: 10010
+      SERVER_PORT: 10000
+    container_name: 'arthas-tunnel-server_v1'
