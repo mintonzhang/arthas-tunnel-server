@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link href="bootstrap-4.2.1.min.css" rel="stylesheet">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="jquery-3.3.1.slim.min.js"></script>
+    <script src="popper-1.14.6.min.js"></script>
+    <script src="bootstrap-4.2.1.min.js"></script>
+
+
+    <script type="text/javascript">
+        window.addEventListener('resize', function () {
+            if (ws !== undefined && ws !== null) {
+                let terminalSize = getTerminalSize();
+                ws.send(JSON.stringify({action: 'resize', cols: terminalSize.cols, rows: terminalSize.rows}));
+                xterm.resize(terminalSize.cols, terminalSize.rows);
+            }
+        });
+    </script>
+
+    <link href="xterm.css" rel="stylesheet"/>
+    <link href="main.css" rel="stylesheet"/>
+    <script src="xterm.js" type="text/javascript"></script>
+    <script src="web-console.js"></script>
+    <title>Arthas Console</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand navbar-light bg-light flex-column flex-md-row bd-navbar">
+    <a class="navbar-brand" href="https://github.com/alibaba/arthas" target="_blank" title=""><img alt="Arthas"
+                                                                                                   class="img-responsive"
+                                                                                                   src="logo.png"
+                                                                                                   style="height: 25px;"
+                                                                                                   title="Welcome to Arthas web console"></a>
+
+    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+            class="navbar-toggler"
+            data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="https://arthas.aliyun.com/doc" target="_blank">官方文档
+                    <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                   href="https://arthas.aliyun.com/doc/arthas-tutorials.html?language=cn&id=arthas-basics"
+                   target="_blank">在线教程</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://github.com/alibaba/arthas" target="_blank">Github</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/agents.html">代理列表</a>
+            </li>
+        </ul>
+    </div>
+
+    <form class="form-inline my-2 my-lg-0">
+        <div class="col">
+            <div class="input-group ">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="ip-addon">IP</span>
+                </div>
+                <input aria-describedby="ip-addon" aria-label="ip" class="form-control" id="ip" name="ip"
+                       placeholder="请输入代理ip"
+                       type="text" v-model="ip" value="127.0.0.1">
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="input-group ">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="port-addon">Port</span>
+                </div>
+                <input aria-describedby="port-addon" aria-label="port" class="form-control" id="port" name="port"
+                       placeholder="请输入代理端口"
+                       type="text" v-model="port" value="19998">
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="input-group ">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="agentId-addon">AgentId</span>
+                </div>
+                <input aria-describedby="agentId-addon" aria-label="agentId" class="form-control" id="agentId"
+                       name="agentId" placeholder="请输入代理id"
+                       type="text" v-model="agentId" value="">
+            </div>
+        </div>
+
+        <div class="col-inline">
+            <button class="btn btn-info form-control" onclick="startConnect()" title="connect" type="button">连接
+            </button>
+            <button class="btn btn-info form-control" onclick="disconnect()" title="disconnect" type="button">
+                断开连接
+            </button>
+            <a class="btn btn-info" href="arthas-output/" id="arthasOutputA" onclick="updateArthasOutputLink()"
+               role="button" target="_blank">Arthas输出</a>
+        </div>
+
+    </form>
+
+</nav>
+
+<div class="container-fluid px-0">
+    <div class="col px-0" id="terminal-card">
+        <div id="terminal"></div>
+    </div>
+</div>
+
+<!--<div class="fullSc" id="fullSc" title="fullscreen">-->
+<!--    <button id="fullScBtn" onclick="xtermFullScreen()"><img src="fullsc.png"></button>-->
+<!--</div>-->
+</body>
+
+</html>

@@ -1,22 +1,33 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11.0.11-jre-slim
 
-ARG ARTHAS_VERSION="3.6.6"
-ARG MIRROR=false
+MAINTAINER mintonzhang@163.com
 
-ENV MAVEN_HOST=https://repo1.maven.org/maven2 \
-    ALPINE_HOST=dl-cdn.alpinelinux.org \
-    MIRROR_MAVEN_HOST=https://maven.aliyun.com/repository/public \
-    MIRROR_ALPINE_HOST=mirrors.aliyun.com 
+ENV TZ=Asia/Shanghai
 
-# if use mirror change to aliyun mirror site
-RUN if $MIRROR; then MAVEN_HOST=${MIRROR_MAVEN_HOST} ;ALPINE_HOST=${MIRROR_ALPINE_HOST} ; sed -i "s/dl-cdn.alpinelinux.org/${ALPINE_HOST}/g" /etc/apk/repositories ; fi && \
-    # https://github.com/docker-library/openjdk/issues/76
-    apk add --no-cache tini && \ 
-    # download & install arthas
-    wget -qO /tmp/arthas.zip "${MAVEN_HOST}/com/taobao/arthas/arthas-packaging/${ARTHAS_VERSION}/arthas-packaging-${ARTHAS_VERSION}-bin.zip" && \
-    mkdir -p /opt/arthas && \
-    unzip /tmp/arthas.zip -d /opt/arthas && \
-    rm /tmp/arthas.zip
+#将这个名字改为具体的项目名
+ENV SERVER_NAME=arthas-tunnel-server
+ENV USERNAME=ywja
+ENV USER_PASSWORD=ywja666
+ENV WS_PORT=7777
+ENV SERVER_PORT=8080
+ENV HEAP_SIZE=256
 
-# Tini is now available at /sbin/tini
-ENTRYPOINT ["/sbin/tini", "--"]
+RUN echo -e "${TZ}" > /etc/timezone && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime
+
+RUN mkdir -p /tunnel-server/config/null
+
+WORKDIR /tunnel-server
+
+VOLUME /tunnel-server
+
+COPY ./target/${SERVER_NAME}.jar ./
+
+CMD sleep 5;java -Dfile.encoding=utf-8 \
+ -server \
+ -Xmx${HEAP_SIZE}m \
+ -Xms${HEAP_SIZE}m \
+ -jar ${SERVER_NAME}.jar \
+ --server.port=${SERVER_PORT} \
+ --arthas.server.port=${WS_PORT}\
+ --login.username=${USERNAME} \
+ --login.password=${USER_PASSWORD} \

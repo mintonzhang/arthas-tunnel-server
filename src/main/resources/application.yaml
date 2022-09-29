@@ -1,0 +1,28 @@
+arthas:
+  embedded-redis:
+    enabled: false
+    settings: maxmemory 128M
+  enable-detail-pages: true
+  server:
+    host: 0.0.0.0
+    port: 7777
+server:
+  port: 8080
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+spring:
+  cache:
+    cache-names: inMemoryClusterCache
+    caffeine:
+      spec: maximumSize=3000,expireAfterAccess=3600s
+    type: caffeine
+  security:
+    user:
+      name: arthas
+
+login:
+  username: ywjasolar
+  password: Vtvs7vKP
