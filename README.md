@@ -1,3 +1,7 @@
+# 注意事项
+
+1. 本项目只是arthas中的tunnel-server,arthas其他组件依然参照官方文档
+
 ## 新增优化项
 
 1. 加入basic身份验证，配置方式在properties.yml中
