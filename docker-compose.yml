@@ -7,6 +7,6 @@ services:
     environment:
       USERNAME: test
       USER_PASSWORD: test
-      WS_PORT: 10010
-      SERVER_PORT: 10000
+      WS_PORT: 19998
+      SERVER_PORT: 19999
     container_name: 'arthas-tunnel-server-master'
