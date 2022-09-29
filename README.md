@@ -9,6 +9,8 @@
 
 ## docker启动
 
-```
+```shell
+curl https://raw.githubusercontent.com/mintonzhang/arthas-tunnel-server/master/docker-compose.yml
+# 前提安装了docker-compose
 docker-compose up -d
 ```
