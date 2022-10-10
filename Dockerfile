@@ -10,7 +10,7 @@ ENV USERNAME=test
 ENV USER_PASSWORD=test
 ENV WS_PORT=7777
 ENV SERVER_PORT=8080
-ENV HEAP_SIZE=256
+ENV HEAP_SIZE=1024
 
 RUN echo -e "${TZ}" > /etc/timezone && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime
 
